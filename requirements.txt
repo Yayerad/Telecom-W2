@@ -1,0 +1,10 @@
+pandas
+numpy
+scikit-learn
+matplotlib
+seaborn
+SQLAlchemy
+psycopg2
+jupyterlab
+notebook
+ipykernel
