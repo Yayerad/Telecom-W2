@@ -1,23 +1,25 @@
-import psycopg2
+from sqlalchemy import create_engine
+import pandas as pd
 
-def connect_to_db():
+def load_data():
     try:
-        conn = psycopg2.connect(
-            dbname="<database_name>",
-            user="<username>",
-            password="<password>",
-            host="<host>",
-            port="<port>"
-        )
-        print("Connection successful")
-        return conn
+        # Create SQLAlchemy engine
+        engine = create_engine('postgresql://postgres:root@localhost/telecom')
+
+        # SQL Query to retrieve all data from the telecom table
+        query = "SELECT * FROM xdr_data;"
+
+        # Load data directly into a pandas DataFrame using the engine
+        data = pd.read_sql(query, engine)
+
+        # Close the engine connection
+        engine.dispose()
+        
+        return data
+    
     except Exception as e:
-        print("Error connecting to database:", e)
+        print(f"Error loading data: {e}")
         return None
-
-
-
-# Example Usage
-# conn = connect_to_db()
-# query = "SELECT * FROM your_table LIMIT 10;"
-# data = fetch_data(query, conn)
+    
+    
+    
